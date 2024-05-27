@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>NotCoin</title>
+    <style>
+        #coin {
+            width: 100px;
+            height: 100px;
+            background: url('coin.png') no-repeat center center;
+            background-size: contain;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>NotCoin</h1>
+    <div id="coin"></div>
+    <div id="score">Puntuación: 0</div>
+
+    <script>
+        let score = 0;
+        const userId = 12345; // Aquí puedes colocar dinámicamente el ID del usuario
+
+        document.getElementById('coin').addEventListener('click', () => {
+            score++;
+            document.getElementById('score').innerText = `Puntuación: ${score}`;
+            fetch('/update_score', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id: userId, score: score })
+            });
+        });
+    </script>
+</body>
+</html>
